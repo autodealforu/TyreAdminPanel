@@ -1,0 +1,7 @@
+REACT_APP_URI = https://tyre-api.dhwanibytes.com/
+# REACT_APP_URI = http://localhost:9040
+
+REACT_APP_LOGO = /images/logo.png
+REACT_APP_BANNER = /images/banner.jpg
+
+

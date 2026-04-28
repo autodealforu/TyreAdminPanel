@@ -1,0 +1,17 @@
+export const GET_BULKS_STATED = "GET_BULKS_STATED";
+export const GET_BULKS = "GET_BULKS";
+export const GET_BULKS_ENDED = "GET_BULKS_ENDED";
+export const ADD_BULK_STATED = "ADD_BULK_STARTED";
+export const ADD_BULK = "ADD_BULK";
+export const ADD_BULK_ENDED = "ADD_BULK_ENDED";
+export const EDIT_BULK_STATED = "EDIT_BULK_STATED";
+export const EDIT_BULK = "EDIT_BULK";
+export const EDIT_BULK_ENDED = "EDIT_BULK_ENDED";
+export const GET_BULK = "GET_BULK";
+export const GET_BULK_STATED = "GET_BULK_STATED";
+export const GET_BULK_ENDED = "GET_BULK_ENDED";
+export const RESET_BULK = "RESET_BULK";
+export const ERROR_BULK = "ERROR_BULK";
+export const GET_ALL_BULKS_STATED = "GET_ALL_BULKS_STATED";
+export const GET_ALL_BULKS = "GET_ALL_BULKS";
+export const GET_ALL_BULKS_ENDED = "GET_ALL_BULKS_ENDED";

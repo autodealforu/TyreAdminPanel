@@ -1,0 +1,17 @@
+export const GET_PARTS_STATED = 'GET_PARTS_STATED';
+export const GET_PARTS = 'GET_PARTS';
+export const GET_PARTS_ENDED = 'GET_PARTS_ENDED';
+export const ADD_PART_STATED = 'ADD_PART_STARTED';
+export const ADD_PART = 'ADD_PART';
+export const ADD_PART_ENDED = 'ADD_PART_ENDED';
+export const EDIT_PART_STATED = 'EDIT_PART_STATED';
+export const EDIT_PART = 'EDIT_PART';
+export const EDIT_PART_ENDED = 'EDIT_PART_ENDED';
+export const GET_PART = 'GET_PART';
+export const GET_PART_STATED = 'GET_PART_STATED';
+export const GET_PART_ENDED = 'GET_PART_ENDED';
+export const RESET_PART = 'RESET_PART';
+export const ERROR_PART = 'ERROR_PART';
+export const GET_ALL_PARTS_STATED = 'GET_ALL_PARTS_STATED';
+export const GET_ALL_PARTS = 'GET_ALL_PARTS';
+export const GET_ALL_PARTS_ENDED = 'GET_ALL_PARTS_ENDED';

@@ -1,0 +1,17 @@
+export const GET_PAGES_STATED = "GET_PAGES_STATED";
+export const GET_PAGES = "GET_PAGES";
+export const GET_PAGES_ENDED = "GET_PAGES_ENDED";
+export const ADD_PAGE_STATED = "ADD_PAGE_STARTED";
+export const ADD_PAGE = "ADD_PAGE";
+export const ADD_PAGE_ENDED = "ADD_PAGE_ENDED";
+export const EDIT_PAGE_STATED = "EDIT_PAGE_STATED";
+export const EDIT_PAGE = "EDIT_PAGE";
+export const EDIT_PAGE_ENDED = "EDIT_PAGE_ENDED";
+export const GET_PAGE = "GET_PAGE";
+export const GET_PAGE_STATED = "GET_PAGE_STATED";
+export const GET_PAGE_ENDED = "GET_PAGE_ENDED";
+export const RESET_PAGE = "RESET_PAGE";
+export const ERROR_PAGE = "ERROR_PAGE";
+export const GET_ALL_PAGES_STATED = "GET_ALL_PAGES_STATED";
+export const GET_ALL_PAGES = "GET_ALL_PAGES";
+export const GET_ALL_PAGES_ENDED = "GET_ALL_PAGES_ENDED";

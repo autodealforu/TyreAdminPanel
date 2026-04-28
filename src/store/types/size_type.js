@@ -1,0 +1,17 @@
+export const GET_SIZES_STATED = "GET_SIZES_STATED";
+export const GET_SIZES = "GET_SIZES";
+export const GET_SIZES_ENDED = "GET_SIZES_ENDED";
+export const ADD_SIZE_STATED = "ADD_SIZE_STARTED";
+export const ADD_SIZE = "ADD_SIZE";
+export const ADD_SIZE_ENDED = "ADD_SIZE_ENDED";
+export const EDIT_SIZE_STATED = "EDIT_SIZE_STATED";
+export const EDIT_SIZE = "EDIT_SIZE";
+export const EDIT_SIZE_ENDED = "EDIT_SIZE_ENDED";
+export const GET_SIZE = "GET_SIZE";
+export const GET_SIZE_STATED = "GET_SIZE_STATED";
+export const GET_SIZE_ENDED = "GET_SIZE_ENDED";
+export const RESET_SIZE = "RESET_SIZE";
+export const ERROR_SIZE = "ERROR_SIZE";
+export const GET_ALL_SIZES_STATED = "GET_ALL_SIZES_STATED";
+export const GET_ALL_SIZES = "GET_ALL_SIZES";
+export const GET_ALL_SIZES_ENDED = "GET_ALL_SIZES_ENDED";

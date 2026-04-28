@@ -1,0 +1,17 @@
+export const GET_BLOGS_STATED = "GET_BLOGS_STATED";
+export const GET_BLOGS = "GET_BLOGS";
+export const GET_BLOGS_ENDED = "GET_BLOGS_ENDED";
+export const ADD_BLOG_STATED = "ADD_BLOG_STARTED";
+export const ADD_BLOG = "ADD_BLOG";
+export const ADD_BLOG_ENDED = "ADD_BLOG_ENDED";
+export const EDIT_BLOG_STATED = "EDIT_BLOG_STATED";
+export const EDIT_BLOG = "EDIT_BLOG";
+export const EDIT_BLOG_ENDED = "EDIT_BLOG_ENDED";
+export const GET_BLOG = "GET_BLOG";
+export const GET_BLOG_STATED = "GET_BLOG_STATED";
+export const GET_BLOG_ENDED = "GET_BLOG_ENDED";
+export const RESET_BLOG = "RESET_BLOG";
+export const ERROR_BLOG = "ERROR_BLOG";
+export const GET_ALL_BLOGS_STATED = "GET_ALL_BLOGS_STATED";
+export const GET_ALL_BLOGS = "GET_ALL_BLOGS";
+export const GET_ALL_BLOGS_ENDED = "GET_ALL_BLOGS_ENDED";

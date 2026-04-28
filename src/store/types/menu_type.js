@@ -1,0 +1,17 @@
+export const GET_MENUS_STATED = "GET_MENUS_STATED";
+export const GET_MENUS = "GET_MENUS";
+export const GET_MENUS_ENDED = "GET_MENUS_ENDED";
+export const ADD_MENU_STATED = "ADD_MENU_STARTED";
+export const ADD_MENU = "ADD_MENU";
+export const ADD_MENU_ENDED = "ADD_MENU_ENDED";
+export const EDIT_MENU_STATED = "EDIT_MENU_STATED";
+export const EDIT_MENU = "EDIT_MENU";
+export const EDIT_MENU_ENDED = "EDIT_MENU_ENDED";
+export const GET_MENU = "GET_MENU";
+export const GET_MENU_STATED = "GET_MENU_STATED";
+export const GET_MENU_ENDED = "GET_MENU_ENDED";
+export const RESET_MENU = "RESET_MENU";
+export const ERROR_MENU = "ERROR_MENU";
+export const GET_ALL_MENUS_STATED = "GET_ALL_MENUS_STATED";
+export const GET_ALL_MENUS = "GET_ALL_MENUS";
+export const GET_ALL_MENUS_ENDED = "GET_ALL_MENUS_ENDED";

@@ -1,0 +1,226 @@
+export const PAGE_TITLE = 'Alloy Wheels';
+export const PAGE_SINGLE_TITLE = 'Alloy Wheel';
+export const LINK_URL = 'alloywheels';
+export const inputFields = {
+  alloyDiameterInches: {
+    type: 'related',
+    required: true,
+    title: 'Alloy Diameter (Inches)',
+    field: 'name',
+  },
+  alloyWidth: {
+    type: 'related',
+    required: true,
+    title: 'Alloy Width',
+    field: 'name',
+  },
+  alloyPCD: {
+    type: 'related',
+    required: true,
+    title: 'Alloy PCD',
+    field: 'name',
+  },
+  alloyOffset: {
+    type: 'related',
+    required: true,
+    title: 'Alloy Offset',
+    field: 'name',
+  },
+  alloyBoreSizeMM: {
+    type: 'related',
+    required: true,
+    title: 'Alloy Bore Size (MM)',
+    field: 'name',
+  },
+  alloyBrand: {
+    type: 'related',
+    required: true,
+    title: 'Alloy Brand',
+    field: 'name',
+  },
+  alloyDesignName: {
+    type: 'string',
+    required: true,
+    title: 'Alloy Design Name',
+    inputType: 'text',
+  },
+  alloyFinish: {
+    type: 'related',
+    required: true,
+    title: 'Alloy Finish',
+    field: 'name',
+  },
+
+  // General Product Fields (same as tyre)
+  productType: {
+    type: 'related',
+    required: true,
+    title: 'Product Type',
+    field: 'name',
+  },
+  gstTaxRate: {
+    type: 'select',
+    required: true,
+    title: 'GST Tax Rate (%)',
+    inputType: 'select',
+    options: ['18', '28', '12', '5', '0'],
+  },
+  gstTax: {
+    type: 'string',
+    required: true,
+    title: 'GST Tax',
+    inputType: 'text',
+  },
+  unit: {
+    type: 'string',
+    required: true,
+    title: 'Unit',
+    inputType: 'text',
+  },
+  broadCategory: {
+    type: 'string',
+    required: true,
+    title: 'Broad Category',
+    inputType: 'text',
+  },
+  category: {
+    type: 'string',
+    required: true,
+    title: 'Category',
+    inputType: 'text',
+  },
+  subCategory: {
+    type: 'string',
+    required: true,
+    title: 'Sub Category',
+    inputType: 'text',
+  },
+  hsnCode: {
+    type: 'string',
+    required: true,
+    title: 'HSN Code',
+    inputType: 'text',
+  },
+  hsnSubCode: {
+    type: 'string',
+    required: true,
+    title: 'HSN Sub Code',
+    inputType: 'text',
+  },
+  warranty: {
+    type: 'string',
+    required: true,
+    title: 'Warranty',
+    inputType: 'text',
+  },
+  productImages: {
+    type: 'gallery',
+    required: false,
+    title: 'Product Images',
+  },
+  productDescription: {
+    type: 'html',
+    required: false,
+    title: 'Product Description',
+    inputType: 'textarea',
+  },
+  productWarrantyPolicy: {
+    type: 'string',
+    required: false,
+    title: 'Product Warranty Policy',
+    inputType: 'textarea',
+  },
+  grossWeight: {
+    type: 'string',
+    required: false,
+    title: 'Gross Weight',
+    inputType: 'number',
+  },
+  volumetricWeight: {
+    type: 'string',
+    required: false,
+    title: 'Volumetric Weight',
+    inputType: 'number',
+  },
+};
+
+export const initialValues = {
+  alloyDiameterInches: '',
+  alloyWidth: '',
+  alloyPCD: '',
+  alloyOffset: '',
+  alloyBoreSizeMM: '',
+  alloyBrand: '',
+  alloyDesignName: '',
+  alloyFinish: '',
+  productType: '',
+  gstTaxRate: '',
+  gstTax: '',
+  unit: '',
+  broadCategory: '',
+  category: '',
+  subCategory: '',
+  hsnCode: '',
+  hsnSubCode: '',
+  warranty: '',
+  productImages: [],
+  productDescription: '',
+  productWarrantyPolicy: '',
+  grossWeight: '',
+  volumetricWeight: '',
+};
+
+export const view_all_table = [
+  { name: 'Brand', value: 'alloyBrand', related: true, field: 'name' },
+  {
+    name: 'Diameter',
+    value: 'alloyDiameterInches',
+    related: true,
+    field: 'name',
+  },
+  { name: 'Width', value: 'alloyWidth', related: true, field: 'name' },
+  { name: 'PCD', value: 'alloyPCD', related: true, field: 'name' },
+  { name: 'Offset', value: 'alloyOffset', related: true, field: 'name' },
+  { name: 'Bore Size', value: 'alloyBoreSizeMM', related: true, field: 'name' },
+  { name: 'Design Name', value: 'alloyDesignName' },
+  { name: 'Finish', value: 'alloyFinish', related: true, field: 'name' },
+];
+
+export const SIDEBAR_OPTIONS = [
+  {
+    id: 'alloyDiameterInches',
+    field: 'alloyDiameterInches',
+    label: 'Alloy Diameter',
+    type: 'related',
+    search_type: 'exact',
+    inputType: 'select',
+    condition: '',
+  },
+  {
+    id: 'alloyWidth',
+    field: 'alloyWidth',
+    label: 'Alloy Width',
+    type: 'related',
+    search_type: 'exact',
+    inputType: 'select',
+    condition: '',
+  },
+  {
+    id: 'alloyBrand',
+    field: 'alloyBrand',
+    label: 'Alloy Brand',
+    type: 'related',
+    search_type: 'exact',
+    inputType: 'select',
+    condition: '',
+  },
+  {
+    id: 'alloyFinish',
+    field: 'alloyFinish',
+    label: 'Alloy Finish',
+    type: 'related',
+    search_type: 'exact',
+    inputType: 'select',
+    condition: '',
+  },
+];

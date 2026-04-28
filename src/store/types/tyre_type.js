@@ -1,0 +1,17 @@
+export const GET_TYRES_STATED = 'GET_TYRES_STATED';
+export const GET_TYRES = 'GET_TYRES';
+export const GET_TYRES_ENDED = 'GET_TYRES_ENDED';
+export const ADD_TYRE_STATED = 'ADD_TYRE_STARTED';
+export const ADD_TYRE = 'ADD_TYRE';
+export const ADD_TYRE_ENDED = 'ADD_TYRE_ENDED';
+export const EDIT_TYRE_STATED = 'EDIT_TYRE_STATED';
+export const EDIT_TYRE = 'EDIT_TYRE';
+export const EDIT_TYRE_ENDED = 'EDIT_TYRE_ENDED';
+export const GET_TYRE = 'GET_TYRE';
+export const GET_TYRE_STATED = 'GET_TYRE_STATED';
+export const GET_TYRE_ENDED = 'GET_TYRE_ENDED';
+export const RESET_TYRE = 'RESET_TYRE';
+export const ERROR_TYRE = 'ERROR_TYRE';
+export const GET_ALL_TYRES_STATED = 'GET_ALL_TYRES_STATED';
+export const GET_ALL_TYRES = 'GET_ALL_TYRES';
+export const GET_ALL_TYRES_ENDED = 'GET_ALL_TYRES_ENDED';

@@ -1,0 +1,24 @@
+// Get All Services
+export const GET_SERVICES_STATED = 'GET_SERVICES_STATED';
+export const GET_SERVICES = 'GET_SERVICES';
+export const GET_SERVICES_ENDED = 'GET_SERVICES_ENDED';
+
+// Add Service
+export const ADD_SERVICE_STATED = 'ADD_SERVICE_STATED';
+export const ADD_SERVICE = 'ADD_SERVICE';
+export const ADD_SERVICE_ENDED = 'ADD_SERVICE_ENDED';
+
+// Edit Service
+export const EDIT_SERVICE_STATED = 'EDIT_SERVICE_STATED';
+export const EDIT_SERVICE = 'EDIT_SERVICE';
+export const EDIT_SERVICE_ENDED = 'EDIT_SERVICE_ENDED';
+
+// Get Single Service
+export const GET_SERVICE_STATED = 'GET_SERVICE_STATED';
+export const GET_SERVICE = 'GET_SERVICE';
+export const GET_SERVICE_ENDED = 'GET_SERVICE_ENDED';
+
+// Get All Services (for dropdown)
+export const GET_ALL_SERVICES_STATED = 'GET_ALL_SERVICES_STATED';
+export const GET_ALL_SERVICES = 'GET_ALL_SERVICES';
+export const GET_ALL_SERVICES_ENDED = 'GET_ALL_SERVICES_ENDED';

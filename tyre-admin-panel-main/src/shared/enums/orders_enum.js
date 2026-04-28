@@ -1,0 +1,140 @@
+export const PAGE_TITLE = 'Orders';
+export const PAGE_SINGLE_TITLE = 'Order';
+export const LINK_URL = 'orders';
+export const inputFields = {
+  order_date: {
+    type: 'string',
+    required: false,
+    title: 'Order Date',
+    inputType: 'date',
+  },
+};
+export const initialValues = {
+  name: '',
+};
+
+export const view_all_table = [
+  { name: 'Order ID', value: 'order_id' },
+  { name: 'Order Date', value: 'order_date', date: true },
+  { name: 'Is Paid', value: 'is_paid', boolean: true },
+  { name: 'Payment Method', value: 'payment_method' },
+  { name: 'Total Amount', value: 'total_amount', preFilled: '₹' },
+  { name: 'Customer', value: 'customer', related: true, field: 'name' },
+  { name: 'Phones', value: 'customer', related: true, field: 'phone' },
+  {
+    name: 'Vendor',
+    value: 'vendor',
+    related: true,
+    field: 'vendor.store_name',
+  },
+  {
+    name: 'Vendor',
+    value: 'vendor',
+    related: true,
+    field: 'user_id',
+  },
+  { name: 'Status', value: 'status' },
+  { name: 'Logistic Partner', value: 'logistic_partner_name' },
+  { name: 'Dispatch Number', value: 'dispatch_number' },
+];
+
+export const SIDEBAR_OPTIONS = [
+  {
+    id: 'name',
+    field: 'customer.name',
+    label: 'Name',
+    type: 'string',
+    search_type: 'search',
+    inputType: 'text',
+    condition: '',
+  },
+  {
+    id: 'phone',
+    field: 'customer.phone',
+    label: 'Phone',
+    type: 'string',
+    search_type: 'search',
+    inputType: 'text',
+    condition: '',
+    role: 'SUPER ADMIN',
+  },
+
+  {
+    id: 'email',
+    field: 'customer.email',
+    label: 'Email',
+    type: 'string',
+    search_type: 'search',
+    inputType: 'text',
+    condition: '',
+    role: 'SUPER ADMIN',
+  },
+  {
+    id: 'status',
+    field: 'status',
+    label: 'Status',
+    type: 'select',
+    search_type: 'exact',
+    inputType: 'text',
+    condition: '',
+    options: [
+      'PENDING',
+      'PROCESSING',
+      'ACCEPTED',
+      'READY TO DISPATCH',
+      'PICKED UP',
+      'IN TRANSIT',
+      'DELIVERED',
+      'OUT FOR DELIVERY',
+      'DELIVERED',
+      'RTO',
+      'RETURN REQUEST',
+      'RETURN CANCELLED',
+      'RETURN ACCEPTED',
+      'RETURN COMPLETED',
+      'INCORRECT',
+      'REFUNDED',
+      'CANCELLED',
+      'FAILED',
+      'RETURNED',
+    ],
+  },
+  {
+    id: 'payment_method',
+    field: 'payment_method',
+    label: 'Payment Method',
+    type: 'select',
+    search_type: 'exact',
+    inputType: 'text',
+    condition: '',
+    options: ['ONLINE', 'COD'],
+  },
+
+  {
+    id: 'logistic_partner_name',
+    field: 'logistic_partner_name',
+    label: 'Logistic Partner',
+    type: 'string',
+    search_type: 'search',
+    inputType: 'text',
+    condition: '',
+  },
+  {
+    id: 'dispatch_number',
+    field: 'dispatch_number',
+    label: 'Dispatch Number',
+    type: 'string',
+    search_type: 'search',
+    inputType: 'text',
+    condition: '',
+  },
+  {
+    id: 'vendor',
+    field: 'vendor',
+    label: 'Vendor',
+    type: 'related',
+    search_type: 'exact',
+    inputType: 'select',
+    condition: '',
+  },
+];

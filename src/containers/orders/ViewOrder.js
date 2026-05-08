@@ -602,6 +602,61 @@ const ViewOrder = ({ match }) => {
                       </div>
                     </div>
                   </div>
+                  {user && user.role === 'SUPER ADMIN' && order.commission && (
+                    <div className='card border-primary'>
+                      <div className='card-header bg-primary text-white'>
+                        <h4 className='card-title text-white'>
+                          Commission Summary
+                        </h4>
+                      </div>
+                      <div className='card-body'>
+                        <div className='d-flex justify-content-between mb-2'>
+                          <div>Rate (%)</div>
+                          <div className='font-weight-bold'>
+                            {order.commission.commission_percentage}%
+                          </div>
+                        </div>
+                        <div className='d-flex justify-content-between mb-2'>
+                          <div>Commission Amount</div>
+                          <div className='font-weight-bold'>
+                            ₹{order.commission.commission_amount?.toLocaleString('en-IN')}
+                          </div>
+                        </div>
+                        <div className='d-flex justify-content-between mb-2'>
+                          <div>Tax (18%)</div>
+                          <div>
+                            ₹{order.commission.tax?.toLocaleString('en-IN')}
+                          </div>
+                        </div>
+                        {order.commission.cod_charges > 0 && (
+                          <div className='d-flex justify-content-between mb-2'>
+                            <div>COD Charges</div>
+                            <div>
+                              ₹{order.commission.cod_charges?.toLocaleString('en-IN')}
+                            </div>
+                          </div>
+                        )}
+                        <hr />
+                        <div className='d-flex justify-content-between'>
+                          <div className='font-weight-bold'>Net Commission</div>
+                          <div className='font-weight-bold text-success'>
+                            ₹{order.commission.sub_commission_amount?.toLocaleString('en-IN')}
+                          </div>
+                        </div>
+                        <div className='mt-3'>
+                          <span
+                            className={`badge ${
+                              order.commission.is_paid
+                                ? 'badge-success'
+                                : 'badge-warning'
+                            }`}
+                          >
+                            {order.commission.is_paid ? 'PAID' : 'UNPAID'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {/* {order.shipping_details && (
                     <div className='card'>
                       <div className='card-header'>

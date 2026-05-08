@@ -127,6 +127,10 @@ const ViewVendor = ({ match }) => {
                       <div> {vendor.vendor && vendor.vendor.store_name} </div>
                     </div>
                     <div className='d-flex justify-content-between '>
+                      <div>Commission Percentage</div>
+                      <div> {vendor.vendor && vendor.vendor.commission_rate}% </div>
+                    </div>
+                    <div className='d-flex justify-content-between '>
                       <div>Store Logo</div>
                       <div>
                         {' '}
@@ -267,13 +271,25 @@ const ViewVendor = ({ match }) => {
                                   </SelectBox>
                                 </div>
                               )}
-
+                            </div>
+                            <div className='row'>
+                              {user && user.role === 'SUPER ADMIN' && (
+                                <div className='col-md-6'>
+                                  <TextInput
+                                    label='Commission Percentage (%)'
+                                    name='commission_rate'
+                                    type='number'
+                                  />
+                                </div>
+                              )}
                               <div className='col-md-6'>
                                 <CheckBox
                                   label='Is Store Active?'
                                   name='store_active'
                                 />
                               </div>
+                            </div>
+                            <div className='row'>
                               <div className='col-md-12'>
                                 <HTMLEditor
                                   title='Store Description'

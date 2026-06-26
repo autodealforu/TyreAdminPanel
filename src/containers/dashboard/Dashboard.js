@@ -181,6 +181,81 @@ function Dashboard() {
                             </Link>
                           </div>
                         </div>
+
+                        {/* Commission and Payout stats */}
+                        {dashboards.commission_stats && user.role === 'SUPER ADMIN' && (
+                          <>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#eef9ff', border: '1px solid #bce1ff' }}>
+                                <div className='report-title' style={{ color: '#0056b3', fontWeight: 'bold' }}>Total Commission Earned</div>
+                                <div className='report-stat' style={{ color: '#0056b3' }}>
+                                  ₹{dashboards.commission_stats.total_commissions?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#fff8eb', border: '1px solid #ffe6cc' }}>
+                                <div className='report-title' style={{ color: '#b25e00', fontWeight: 'bold' }}>Pending Vendor Payouts</div>
+                                <div className='report-stat' style={{ color: '#b25e00' }}>
+                                  ₹{dashboards.commission_stats.total_payout_pending?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#edfcf1', border: '1px solid #c2f0c2' }}>
+                                <div className='report-title' style={{ color: '#1b5e20', fontWeight: 'bold' }}>Completed Vendor Payouts</div>
+                                <div className='report-stat' style={{ color: '#1b5e20' }}>
+                                  ₹{dashboards.commission_stats.total_payout_completed?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
+
+                        {dashboards.commission_stats && user.role === 'VENDOR' && (
+                          <>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#eef9ff', border: '1px solid #bce1ff' }}>
+                                <div className='report-title' style={{ color: '#0056b3', fontWeight: 'bold' }}>My Total Sales</div>
+                                <div className='report-stat' style={{ color: '#0056b3' }}>
+                                  ₹{dashboards.commission_stats.vendor_sales?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#fff1f0', border: '1px solid #ffd8d6' }}>
+                                <div className='report-title' style={{ color: '#c53929', fontWeight: 'bold' }}>Commission Deducted</div>
+                                <div className='report-stat' style={{ color: '#c53929' }}>
+                                  ₹{dashboards.commission_stats.vendor_commission?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#edfcf1', border: '1px solid #c2f0c2' }}>
+                                <div className='report-title' style={{ color: '#1b5e20', fontWeight: 'bold' }}>My Net Earnings</div>
+                                <div className='report-stat' style={{ color: '#1b5e20' }}>
+                                  ₹{dashboards.commission_stats.vendor_net_earnings?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#fff8eb', border: '1px solid #ffe6cc' }}>
+                                <div className='report-title' style={{ color: '#b25e00', fontWeight: 'bold' }}>Payouts Pending</div>
+                                <div className='report-stat' style={{ color: '#b25e00' }}>
+                                  ₹{dashboards.commission_stats.vendor_payout_pending?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='col-md-3'>
+                              <div className='dashboard-stat pending' style={{ backgroundColor: '#edfcf1', border: '1px solid #c2f0c2' }}>
+                                <div className='report-title' style={{ color: '#1b5e20', fontWeight: 'bold' }}>Payouts Completed</div>
+                                <div className='report-stat' style={{ color: '#1b5e20' }}>
+                                  ₹{dashboards.commission_stats.vendor_payout_completed?.toLocaleString('en-IN') || 0}
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
                         {dashboards.order_total_stats &&
                           dashboards.order_total_stats.map((item) => {
                             return (

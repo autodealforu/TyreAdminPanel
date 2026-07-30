@@ -190,6 +190,7 @@ export const updatePayoutStatus = (id, formData) => async (dispatch) => {
     dispatch({
       type: EDIT_ORDER_ENDED,
     });
+    dispatch(setAlert('Vendor Payout Status Updated Successfully', 'success'));
   } catch (error) {
     dispatch({
       type: EDIT_ORDER_ENDED,
@@ -198,6 +199,18 @@ export const updatePayoutStatus = (id, formData) => async (dispatch) => {
     dispatch(handleError(error));
   }
 };
+
+export const settleVendorPayout = (vendor_id) => async (dispatch) => {
+  try {
+    const { data } = await api.put('/orders/vendor-payout-settle', { vendor_id });
+    dispatch(setAlert(data.message || 'Vendor payout settled successfully', 'success'));
+    return data;
+  } catch (error) {
+    dispatch(handleErrorLocal(error));
+    dispatch(handleError(error));
+  }
+};
+
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     const { data } = await api.delete(`/orders/${id}`);

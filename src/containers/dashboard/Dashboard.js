@@ -3,6 +3,7 @@ import BreadCrumb from '../../components/template/BreadCrumb';
 import Header from '../../components/template/Header';
 import FilterDateComponent from '../../components/common/FilterDateComponent';
 import { useAllDashboards } from '../../shared/hooks/UseDashboard';
+import { useSettleVendorPayout } from '../../shared/hooks/UseOrder';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useSelectAllNotification } from '../../shared/hooks/UseNotification';
@@ -16,6 +17,14 @@ function Dashboard() {
   const { dashboards, dashboards_loading } = data;
   const [notification_data] = useSelectAllNotification();
   const { all_notifications } = notification_data;
+  const [settlePayout] = useSettleVendorPayout();
+
+  const handleBulkSettle = async (vendorId, storeName) => {
+    if (window.confirm(`Are you sure you want to mark ALL pending payouts for "${storeName || 'this vendor'}" as PAID?`)) {
+      await settlePayout(vendorId);
+      window.location.reload();
+    }
+  };
   console.log(dashboards);
   return (
     <div className='pace-done'>
@@ -256,13 +265,24 @@ function Dashboard() {
                                               </td>
                                               <td style={{ padding: '12px 15px' }}>
                                                 {v.vendor_id && v.vendor_id !== 'general' ? (
-                                                  <Link
-                                                    to={`/vendors/${v.vendor_id}/view`}
-                                                    className='btn btn-sm btn-outline-primary'
-                                                    style={{ padding: '3px 10px', fontSize: '12px' }}
-                                                  >
-                                                    View Vendor
-                                                  </Link>
+                                                  <div className='d-flex align-items-center' style={{ gap: '8px' }}>
+                                                    {v.pending_payout > 0 && (
+                                                      <button
+                                                        className='btn btn-sm btn-success'
+                                                        style={{ padding: '3px 10px', fontSize: '12px', fontWeight: 'bold' }}
+                                                        onClick={() => handleBulkSettle(v.vendor_id, v.store_name)}
+                                                      >
+                                                        Settle All Payouts
+                                                      </button>
+                                                    )}
+                                                    <Link
+                                                      to={`/vendors/${v.vendor_id}/view`}
+                                                      className='btn btn-sm btn-outline-primary'
+                                                      style={{ padding: '3px 10px', fontSize: '12px' }}
+                                                    >
+                                                      View Vendor
+                                                    </Link>
+                                                  </div>
                                                 ) : (
                                                   <span className='text-muted small'>-</span>
                                                 )}

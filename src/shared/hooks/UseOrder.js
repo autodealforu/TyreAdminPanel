@@ -11,6 +11,7 @@ import {
   updatePaymentStatus,
   updateDeliveryCharges,
   updatePayoutStatus,
+  settleVendorPayout,
 } from '../../store/actions/order_action';
 import _debounce from 'lodash/debounce';
 import { useSelectAllProduct } from './UseProduct';
@@ -104,6 +105,14 @@ export const useUpdatePayoutStatus = () => {
     await dispatch(updatePayoutStatus(id, data));
   };
   return [updateData];
+};
+
+export const useSettleVendorPayout = () => {
+  const dispatch = useDispatch();
+  const settleData = async (vendor_id) => {
+    await dispatch(settleVendorPayout(vendor_id));
+  };
+  return [settleData];
 };
 
 export const useSelectAllOrder = () => {

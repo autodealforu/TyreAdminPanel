@@ -48,9 +48,10 @@ const ViewOrder = ({ match }) => {
   const [updatePayoutStatusData] = useUpdatePayoutStatus();
 
   const handlePayoutStatusToggle = async (vendorId, isPaid) => {
+    const targetVendorId = vendorId || order.products?.[0]?.vendor?._id || order.products?.[0]?.vendor || order.vendor?._id || order.vendor;
     if (window.confirm(`Are you sure you want to mark this vendor payout as ${isPaid ? 'PAID' : 'UNPAID'}?`)) {
       await updatePayoutStatusData(order._id, {
-        vendor_id: vendorId,
+        vendor_id: targetVendorId,
         is_paid: isPaid,
       });
       reloadData(order._id);
@@ -305,17 +306,21 @@ const ViewOrder = ({ match }) => {
                                   .map(
                                     (p) =>
                                       p.vendor_details?.name ||
+                                      p.vendor_details?.store_name ||
                                       p.vendor?.name ||
-                                      p.vendor?.store_name
+                                      p.vendor?.store_name ||
+                                      'Vendor Store'
                                   )
                                   .filter(Boolean)
                               ),
                             ].map((vendorName, idx) => {
                               const vendorProduct = order.products.find(
                                 (p) =>
-                                  p.vendor_details?.name === vendorName ||
-                                  p.vendor?.name === vendorName ||
-                                  p.vendor?.store_name === vendorName
+                                  (p.vendor_details?.name ||
+                                    p.vendor_details?.store_name ||
+                                    p.vendor?.name ||
+                                    p.vendor?.store_name ||
+                                    'Vendor Store') === vendorName
                               );
                               const vendor = vendorProduct?.vendor;
                               const vendorDetails =
@@ -739,67 +744,68 @@ const ViewOrder = ({ match }) => {
                   })()}
 
                   {/* Legacy single vendor Commission Summary (for Super Admin only, as fallback) */}
-                  {user && user.role === 'SUPER ADMIN' && order.commission && (!order.vendor_commissions || order.vendor_commissions.length === 0) && (
-                    <div className='card border-primary'>
-                      <div className='card-header bg-primary text-white'>
-                        <h4 className='card-title text-white'>
-                          Commission Summary (Legacy)
-                        </h4>
-                      </div>
-                      <div className='card-body'>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>Rate (%)</div>
-                          <div className='font-weight-bold'>
-                            {order.commission.commission_percentage}%
-                          </div>
+                  {user && user.role === 'SUPER ADMIN' && order.commission && (!order.vendor_commissions || order.vendor_commissions.length === 0) && (() => {
+                    const commRate = order.commission.commission_percentage || 10;
+                    const subTotal = order.sub_total || order.total_amount || 0;
+                    const commAmt = order.commission.commission_amount || (subTotal * (commRate / 100));
+                    const tax = order.commission.tax || (commAmt * 0.18);
+                    const netPayout = Math.max(0, subTotal - commAmt - tax);
+
+                    return (
+                      <div className='card border-primary'>
+                        <div className='card-header bg-primary text-white'>
+                          <h4 className='card-title text-white'>
+                            Commission Summary (Legacy)
+                          </h4>
                         </div>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>Commission Amount</div>
-                          <div className='font-weight-bold'>
-                            ₹{order.commission.commission_amount?.toLocaleString('en-IN')}
-                          </div>
-                        </div>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>Tax (18%)</div>
-                          <div>
-                            ₹{order.commission.tax?.toLocaleString('en-IN')}
-                          </div>
-                        </div>
-                        {order.commission.cod_charges > 0 && (
+                        <div className='card-body'>
                           <div className='d-flex justify-content-between mb-2'>
-                            <div>COD Charges</div>
-                            <div>
-                              ₹{order.commission.cod_charges?.toLocaleString('en-IN')}
+                            <div>Rate (%)</div>
+                            <div className='font-weight-bold'>
+                              {commRate}%
                             </div>
                           </div>
-                        )}
-                        <hr />
-                        <div className='d-flex justify-content-between'>
-                          <div className='font-weight-bold'>Net Commission</div>
-                          <div className='font-weight-bold text-success'>
-                            ₹{order.commission.sub_commission_amount?.toLocaleString('en-IN')}
+                          <div className='d-flex justify-content-between mb-2'>
+                            <div>Commission Amount</div>
+                            <div className='font-weight-bold'>
+                              ₹{commAmt.toLocaleString('en-IN')}
+                            </div>
+                          </div>
+                          <div className='d-flex justify-content-between mb-2'>
+                            <div>Tax (18%)</div>
+                            <div>
+                              ₹{tax.toLocaleString('en-IN')}
+                            </div>
+                          </div>
+                          <hr />
+                          <div className='d-flex justify-content-between mb-2'>
+                            <div className='font-weight-bold'>Net Vendor Payout</div>
+                            <div className='font-weight-bold text-success' style={{ fontSize: '1.1rem' }}>
+                              ₹{netPayout.toLocaleString('en-IN')}
+                            </div>
+                          </div>
+                          <div className='mt-3 d-flex justify-content-between align-items-center'>
+                            <span
+                              className={`badge ${
+                                order.commission.is_paid
+                                  ? 'badge-success bg-success'
+                                  : 'badge-warning bg-warning'
+                              }`}
+                              style={{ fontSize: '13px', padding: '6px 12px' }}
+                            >
+                              {order.commission.is_paid ? 'PAID' : 'UNPAID'}
+                            </span>
+                            <button
+                              className={`btn btn-xs ${order.commission.is_paid ? 'btn-danger' : 'btn-success'}`}
+                              onClick={() => handlePayoutStatusToggle(order.vendor?._id || order.vendor, !order.commission.is_paid)}
+                            >
+                              {order.commission.is_paid ? 'Mark Unpaid' : 'Mark Paid'}
+                            </button>
                           </div>
                         </div>
-                        <div className='mt-3 d-flex justify-content-between align-items-center'>
-                          <span
-                            className={`badge ${
-                              order.commission.is_paid
-                                ? 'badge-success bg-success'
-                                : 'badge-warning bg-warning'
-                            }`}
-                          >
-                            {order.commission.is_paid ? 'PAID' : 'UNPAID'}
-                          </span>
-                          <button
-                            className={`btn btn-xs ${order.commission.is_paid ? 'btn-danger' : 'btn-success'}`}
-                            onClick={() => handlePayoutStatusToggle(order.vendor?._id || order.vendor, !order.commission.is_paid)}
-                          >
-                            {order.commission.is_paid ? 'Mark Unpaid' : 'Mark Paid'}
-                          </button>
-                        </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   {/* Legacy single vendor Commission Summary (for VENDOR only, as fallback) */}
                   {user && user.role === 'VENDOR' && order.commission && (!order.vendor_commissions || order.vendor_commissions.length === 0) && (order.vendor?._id === user._id || order.vendor === user._id) && (

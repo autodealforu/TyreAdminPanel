@@ -209,6 +209,73 @@ function Dashboard() {
                                 </div>
                               </div>
                             </div>
+
+                            {/* Vendor Earnings & Payout Breakdown Table for Super Admin */}
+                            {dashboards.commission_stats?.vendor_payouts_list && dashboards.commission_stats.vendor_payouts_list.length > 0 && (
+                              <div className='col-md-12 mt-4 mb-4'>
+                                <div className='card border-primary shadow-sm'>
+                                  <div className='card-header bg-primary text-white d-flex justify-content-between align-items-center' style={{ padding: '12px 20px' }}>
+                                    <h4 className='card-title text-white m-0 font-weight-bold' style={{ fontSize: '16px' }}>
+                                      <i className='fa fa-briefcase mr-2'></i> Vendor Earnings & Payouts Breakdown
+                                    </h4>
+                                  </div>
+                                  <div className='card-body p-0'>
+                                    <div className='table-responsive'>
+                                      <table className='table table-striped table-hover mb-0 align-middle' style={{ fontSize: '14px' }}>
+                                        <thead className='thead-dark'>
+                                          <tr>
+                                            <th style={{ padding: '12px 15px' }}>#</th>
+                                            <th style={{ padding: '12px 15px' }}>Store / Vendor Name</th>
+                                            <th style={{ padding: '12px 15px' }}>Total Orders</th>
+                                            <th style={{ padding: '12px 15px' }}>Total Sales</th>
+                                            <th style={{ padding: '12px 15px' }}>AutoDeal4U Comm (10%)</th>
+                                            <th style={{ padding: '12px 15px' }}>Pending Vendor Payout</th>
+                                            <th style={{ padding: '12px 15px' }}>Paid Payout</th>
+                                            <th style={{ padding: '12px 15px' }}>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {dashboards.commission_stats.vendor_payouts_list.map((v, idx) => (
+                                            <tr key={v.vendor_id || idx}>
+                                              <td style={{ padding: '12px 15px' }}>{idx + 1}</td>
+                                              <td style={{ padding: '12px 15px' }}>
+                                                <strong className='text-dark'>{v.store_name || 'Vendor Store'}</strong>
+                                              </td>
+                                              <td style={{ padding: '12px 15px' }}>
+                                                <span className='badge badge-secondary' style={{ fontSize: '12px', padding: '5px 10px' }}>{v.orders_count} orders</span>
+                                              </td>
+                                              <td style={{ padding: '12px 15px', fontWeight: '600' }}>₹{v.total_sales?.toLocaleString('en-IN')}</td>
+                                              <td style={{ padding: '12px 15px', color: '#0056b3', fontWeight: 'bold' }}>
+                                                ₹{v.total_commission?.toLocaleString('en-IN')}
+                                              </td>
+                                              <td style={{ padding: '12px 15px', color: '#b25e00', fontWeight: 'bold' }}>
+                                                ₹{v.pending_payout?.toLocaleString('en-IN')}
+                                              </td>
+                                              <td style={{ padding: '12px 15px', color: '#1b5e20', fontWeight: 'bold' }}>
+                                                ₹{v.completed_payout?.toLocaleString('en-IN')}
+                                              </td>
+                                              <td style={{ padding: '12px 15px' }}>
+                                                {v.vendor_id && v.vendor_id !== 'general' ? (
+                                                  <Link
+                                                    to={`/vendors/${v.vendor_id}/view`}
+                                                    className='btn btn-sm btn-outline-primary'
+                                                    style={{ padding: '3px 10px', fontSize: '12px' }}
+                                                  >
+                                                    View Vendor
+                                                  </Link>
+                                                ) : (
+                                                  <span className='text-muted small'>-</span>
+                                                )}
+                                              </td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </>
                         )}
 

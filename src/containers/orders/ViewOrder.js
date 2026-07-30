@@ -569,6 +569,140 @@ const ViewOrder = ({ match }) => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Full-width Vendor Commissions & Payouts Section inside col-md-9 */}
+                  {user && user.role === 'SUPER ADMIN' && (
+                    <div className='card border-primary shadow-sm mt-3 mb-3'>
+                      <div className='card-header bg-primary text-white d-flex justify-content-between align-items-center' style={{ padding: '12px 20px' }}>
+                        <h4 className='card-title text-white m-0 font-weight-bold' style={{ fontSize: '15px' }}>
+                          <i className='fa fa-percent mr-2'></i> Vendor Commissions & Payouts Breakdown
+                        </h4>
+                      </div>
+                      <div className='card-body p-0'>
+                        {order.vendor_commissions && order.vendor_commissions.length > 0 ? (
+                          <div className='table-responsive'>
+                            <table className='table table-striped table-hover mb-0 align-middle' style={{ fontSize: '14px' }}>
+                              <thead className='thead-light'>
+                                <tr>
+                                  <th style={{ padding: '12px 15px' }}>Store / Vendor Name</th>
+                                  <th style={{ padding: '12px 15px' }}>Sales Amount</th>
+                                  <th style={{ padding: '12px 15px' }}>Commission Cut</th>
+                                  <th style={{ padding: '12px 15px' }}>18% GST</th>
+                                  <th style={{ padding: '12px 15px' }}>Net Vendor Payout</th>
+                                  <th style={{ padding: '12px 15px' }}>Payout Status</th>
+                                  <th style={{ padding: '12px 15px' }}>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {order.vendor_commissions.map((vc, idx) => {
+                                  const sales = vc.total_amount || 0;
+                                  const commRate = vc.commission_rate || 10;
+                                  const comm = vc.commission_amount || (sales * (commRate / 100));
+                                  const tax = comm * 0.18;
+                                  const netPayout = Math.max(0, sales - comm - tax);
+
+                                  return (
+                                    <tr key={vc._id || idx}>
+                                      <td style={{ padding: '12px 15px' }}>
+                                        <strong className='text-dark'>{vc.store_name || vc.vendor_name || order.vendor?.store_name || order.vendor?.name || 'Vendor Store'}</strong>
+                                      </td>
+                                      <td style={{ padding: '12px 15px', fontWeight: '600' }}>₹{sales.toLocaleString('en-IN')}</td>
+                                      <td style={{ padding: '12px 15px', color: '#c53929' }}>
+                                        ₹{comm.toLocaleString('en-IN')}
+                                        <div className='text-muted small'>({commRate}%)</div>
+                                      </td>
+                                      <td style={{ padding: '12px 15px', color: '#6c757d' }}>₹{tax.toLocaleString('en-IN')}</td>
+                                      <td style={{ padding: '12px 15px', color: '#1b5e20', fontWeight: 'bold', fontSize: '15px' }}>
+                                        ₹{netPayout.toLocaleString('en-IN')}
+                                      </td>
+                                      <td style={{ padding: '12px 15px' }}>
+                                        <span
+                                          className={`badge ${vc.payment_status === 'PAID' ? 'badge-success bg-success' : 'badge-warning bg-warning'}`}
+                                          style={{ fontSize: '12px', padding: '6px 12px' }}
+                                        >
+                                          {vc.payment_status || 'PENDING'}
+                                        </span>
+                                      </td>
+                                      <td style={{ padding: '12px 15px' }}>
+                                        <button
+                                          className={`btn btn-sm ${vc.payment_status === 'PAID' ? 'btn-outline-danger' : 'btn-success'}`}
+                                          style={{ padding: '4px 14px', fontSize: '12px', fontWeight: 'bold' }}
+                                          onClick={() => handlePayoutStatusToggle(vc.vendor?._id || vc.vendor, vc.payment_status !== 'PAID')}
+                                        >
+                                          {vc.payment_status === 'PAID' ? 'Mark Unpaid' : 'Mark Paid'}
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        ) : (
+                          // Fallback single-vendor payout display for legacy orders
+                          (() => {
+                            const commRate = order.commission?.commission_percentage || 10;
+                            const subTotal = order.sub_total || order.total_amount || 0;
+                            const commAmt = order.commission?.commission_amount || (subTotal * (commRate / 100));
+                            const tax = order.commission?.tax || (commAmt * 0.18);
+                            const netPayout = Math.max(0, subTotal - commAmt - tax);
+                            const storeName = order.vendor?.store_name || order.vendor?.name || 'Vendor Store';
+
+                            return (
+                              <div className='table-responsive'>
+                                <table className='table table-striped table-hover mb-0 align-middle' style={{ fontSize: '14px' }}>
+                                  <thead className='thead-light'>
+                                    <tr>
+                                      <th style={{ padding: '12px 15px' }}>Store / Vendor Name</th>
+                                      <th style={{ padding: '12px 15px' }}>Sales Amount</th>
+                                      <th style={{ padding: '12px 15px' }}>Commission Cut</th>
+                                      <th style={{ padding: '12px 15px' }}>18% GST</th>
+                                      <th style={{ padding: '12px 15px' }}>Net Vendor Payout</th>
+                                      <th style={{ padding: '12px 15px' }}>Payout Status</th>
+                                      <th style={{ padding: '12px 15px' }}>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td style={{ padding: '12px 15px' }}>
+                                        <strong className='text-dark'>{storeName}</strong>
+                                      </td>
+                                      <td style={{ padding: '12px 15px', fontWeight: '600' }}>₹{subTotal.toLocaleString('en-IN')}</td>
+                                      <td style={{ padding: '12px 15px', color: '#c53929' }}>
+                                        ₹{commAmt.toLocaleString('en-IN')}
+                                        <div className='text-muted small'>({commRate}%)</div>
+                                      </td>
+                                      <td style={{ padding: '12px 15px', color: '#6c757d' }}>₹{tax.toLocaleString('en-IN')}</td>
+                                      <td style={{ padding: '12px 15px', color: '#1b5e20', fontWeight: 'bold', fontSize: '15px' }}>
+                                        ₹{netPayout.toLocaleString('en-IN')}
+                                      </td>
+                                      <td style={{ padding: '12px 15px' }}>
+                                        <span
+                                          className={`badge ${order.commission?.is_paid ? 'badge-success bg-success' : 'badge-warning bg-warning'}`}
+                                          style={{ fontSize: '12px', padding: '6px 12px' }}
+                                        >
+                                          {order.commission?.is_paid ? 'PAID' : 'PENDING'}
+                                        </span>
+                                      </td>
+                                      <td style={{ padding: '12px 15px' }}>
+                                        <button
+                                          className={`btn btn-sm ${order.commission?.is_paid ? 'btn-outline-danger' : 'btn-success'}`}
+                                          style={{ padding: '4px 14px', fontSize: '12px', fontWeight: 'bold' }}
+                                          onClick={() => handlePayoutStatusToggle(order.vendor?._id || order.vendor, !order.commission?.is_paid)}
+                                        >
+                                          {order.commission?.is_paid ? 'Mark Unpaid' : 'Mark Paid'}
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            );
+                          })()
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className='col-md-3'>
                   <OrderUpdateCard
@@ -626,228 +760,6 @@ const ViewOrder = ({ match }) => {
                       </div>
                     </div>
                   </div>
-                  {/* Vendor Commissions Section */}
-                  {user && user.role === 'SUPER ADMIN' && order.vendor_commissions && order.vendor_commissions.length > 0 && (
-                    <div className='card border-primary'>
-                      <div className='card-header bg-primary text-white'>
-                        <h4 className='card-title text-white'>
-                          Vendor Commissions & Payouts
-                        </h4>
-                      </div>
-                      <div className='card-body p-0'>
-                        <table className='table table-striped mb-0' style={{ fontSize: '13px' }}>
-                          <thead>
-                            <tr>
-                              <th>Store</th>
-                              <th>Sales</th>
-                              <th>Comm</th>
-                              <th>Net Payout</th>
-                              <th>Status</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {order.vendor_commissions.map((vc, idx) => {
-                              const sales = vc.total_amount || 0;
-                              const comm = vc.commission_amount || 0;
-                              const tax = comm * 0.18;
-                              const netPayout = sales - comm - tax;
-                              return (
-                                <tr key={vc._id || idx}>
-                                  <td><strong>{vc.store_name || vc.vendor_name || 'N/A'}</strong></td>
-                                  <td>₹{sales.toLocaleString('en-IN')}</td>
-                                  <td>
-                                    ₹{comm.toLocaleString('en-IN')}
-                                    <div className='text-muted' style={{ fontSize: '11px' }}>
-                                      ({vc.commission_rate}% + 18% GST)
-                                    </div>
-                                  </td>
-                                  <td className='text-success font-weight-bold'>
-                                    ₹{netPayout.toLocaleString('en-IN')}
-                                  </td>
-                                  <td>
-                                    <span className={`badge ${vc.payment_status === 'PAID' ? 'badge-success bg-success' : 'badge-warning bg-warning'}`}>
-                                      {vc.payment_status || 'PENDING'}
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <button
-                                      className={`btn btn-xs ${vc.payment_status === 'PAID' ? 'btn-danger' : 'btn-success'}`}
-                                      onClick={() => handlePayoutStatusToggle(vc.vendor?._id || vc.vendor, vc.payment_status !== 'PAID')}
-                                    >
-                                      {vc.payment_status === 'PAID' ? 'Unpay' : 'Pay'}
-                                    </button>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Vendor Specific Commission Section */}
-                  {user && user.role === 'VENDOR' && order.vendor_commissions && order.vendor_commissions.length > 0 && (() => {
-                    const myComm = order.vendor_commissions.find(
-                      (vc) => (vc.vendor?._id || vc.vendor) === user._id
-                    );
-                    if (!myComm) return null;
-                    const sales = myComm.total_amount || 0;
-                    const comm = myComm.commission_amount || 0;
-                    const tax = comm * 0.18;
-                    const netPayout = sales - comm - tax;
-                    return (
-                      <div className='card border-primary'>
-                        <div className='card-header bg-primary text-white'>
-                          <h4 className='card-title text-white'>
-                            My Commission & Payout
-                          </h4>
-                        </div>
-                        <div className='card-body'>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>Store Name</div>
-                            <div className='font-weight-bold'>{myComm.store_name || 'N/A'}</div>
-                          </div>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>My Total Sales</div>
-                            <div className='font-weight-bold'>₹{sales.toLocaleString('en-IN')}</div>
-                          </div>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>Commission Rate</div>
-                            <div className='font-weight-bold'>{myComm.commission_rate}%</div>
-                          </div>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>Commission Deducted</div>
-                            <div className='font-weight-bold text-danger'>-₹{comm.toLocaleString('en-IN')}</div>
-                          </div>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>GST (18% on Comm)</div>
-                            <div className='font-weight-bold text-danger'>-₹{tax.toLocaleString('en-IN')}</div>
-                          </div>
-                          <hr />
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div className='font-weight-bold'>My Net Earnings</div>
-                            <div className='font-weight-bold text-success' style={{ fontSize: '1.1rem' }}>
-                              ₹{netPayout.toLocaleString('en-IN')}
-                            </div>
-                          </div>
-                          <div className='mt-3 d-flex justify-content-between align-items-center'>
-                            <div>Payout Status:</div>
-                            <span className={`badge ${myComm.payment_status === 'PAID' ? 'badge-success bg-success' : 'badge-warning bg-warning'}`} style={{ fontSize: '13px', padding: '6px 12px' }}>
-                              {myComm.payment_status || 'PENDING'}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()}
-
-                  {/* Legacy single vendor Commission Summary (for Super Admin only, as fallback) */}
-                  {user && user.role === 'SUPER ADMIN' && order.commission && (!order.vendor_commissions || order.vendor_commissions.length === 0) && (() => {
-                    const commRate = order.commission.commission_percentage || 10;
-                    const subTotal = order.sub_total || order.total_amount || 0;
-                    const commAmt = order.commission.commission_amount || (subTotal * (commRate / 100));
-                    const tax = order.commission.tax || (commAmt * 0.18);
-                    const netPayout = Math.max(0, subTotal - commAmt - tax);
-
-                    return (
-                      <div className='card border-primary'>
-                        <div className='card-header bg-primary text-white'>
-                          <h4 className='card-title text-white'>
-                            Commission Summary (Legacy)
-                          </h4>
-                        </div>
-                        <div className='card-body'>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>Rate (%)</div>
-                            <div className='font-weight-bold'>
-                              {commRate}%
-                            </div>
-                          </div>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>Commission Amount</div>
-                            <div className='font-weight-bold'>
-                              ₹{commAmt.toLocaleString('en-IN')}
-                            </div>
-                          </div>
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div>Tax (18%)</div>
-                            <div>
-                              ₹{tax.toLocaleString('en-IN')}
-                            </div>
-                          </div>
-                          <hr />
-                          <div className='d-flex justify-content-between mb-2'>
-                            <div className='font-weight-bold'>Net Vendor Payout</div>
-                            <div className='font-weight-bold text-success' style={{ fontSize: '1.1rem' }}>
-                              ₹{netPayout.toLocaleString('en-IN')}
-                            </div>
-                          </div>
-                          <div className='mt-3 d-flex justify-content-between align-items-center'>
-                            <span
-                              className={`badge ${
-                                order.commission.is_paid
-                                  ? 'badge-success bg-success'
-                                  : 'badge-warning bg-warning'
-                              }`}
-                              style={{ fontSize: '13px', padding: '6px 12px' }}
-                            >
-                              {order.commission.is_paid ? 'PAID' : 'UNPAID'}
-                            </span>
-                            <button
-                              className={`btn btn-xs ${order.commission.is_paid ? 'btn-danger' : 'btn-success'}`}
-                              onClick={() => handlePayoutStatusToggle(order.vendor?._id || order.vendor, !order.commission.is_paid)}
-                            >
-                              {order.commission.is_paid ? 'Mark Unpaid' : 'Mark Paid'}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()}
-
-                  {/* Legacy single vendor Commission Summary (for VENDOR only, as fallback) */}
-                  {user && user.role === 'VENDOR' && order.commission && (!order.vendor_commissions || order.vendor_commissions.length === 0) && (order.vendor?._id === user._id || order.vendor === user._id) && (
-                    <div className='card border-primary'>
-                      <div className='card-header bg-primary text-white'>
-                        <h4 className='card-title text-white'>
-                          My Commission & Payout (Legacy)
-                        </h4>
-                      </div>
-                      <div className='card-body'>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>My Total Sales</div>
-                          <div className='font-weight-bold'>₹{(order.sub_total || order.total_amount || 0).toLocaleString('en-IN')}</div>
-                        </div>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>Commission Rate</div>
-                          <div className='font-weight-bold'>{order.commission.commission_percentage}%</div>
-                        </div>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>Commission Deducted</div>
-                          <div className='font-weight-bold text-danger'>-₹{order.commission.commission_amount?.toLocaleString('en-IN')}</div>
-                        </div>
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div>GST (18% on Comm)</div>
-                          <div className='font-weight-bold text-danger'>-₹{(order.commission.tax || (order.commission.commission_amount * 0.18))?.toLocaleString('en-IN')}</div>
-                        </div>
-                        <hr />
-                        <div className='d-flex justify-content-between mb-2'>
-                          <div className='font-weight-bold'>My Net Earnings</div>
-                          <div className='font-weight-bold text-success' style={{ fontSize: '1.1rem' }}>
-                            ₹{((order.sub_total || order.total_amount || 0) - order.commission.commission_amount - (order.commission.tax || (order.commission.commission_amount * 0.18))).toLocaleString('en-IN')}
-                          </div>
-                        </div>
-                        <div className='mt-3 d-flex justify-content-between align-items-center'>
-                          <div>Payout Status:</div>
-                          <span className={`badge ${order.commission.is_paid ? 'badge-success bg-success' : 'badge-warning bg-warning'}`} style={{ fontSize: '13px', padding: '6px 12px' }}>
-                            {order.commission.is_paid ? 'PAID' : 'PENDING'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                   {/* {order.shipping_details && (
                     <div className='card'>
                       <div className='card-header'>

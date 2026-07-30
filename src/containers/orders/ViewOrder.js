@@ -152,7 +152,8 @@ const ViewOrder = ({ match }) => {
                   <div className='card'>
                     <div className='card-header'>
                       <h4 className='card-title'> Products </h4>
-                      <div className='card-body'>
+                    </div>
+                    <div className='card-body'>
                         <table className='table table-striped'>
                           <thead>
                             <tr>
@@ -373,6 +374,8 @@ const ViewOrder = ({ match }) => {
                                     </div>
                                   </div>
                                   {vendor?.pickup_address &&
+                                    Array.isArray(vendor.pickup_address) &&
+                                    vendor.pickup_address.length > 0 &&
                                     vendor.pickup_address[0] && (
                                       <>
                                         <hr />
@@ -381,13 +384,12 @@ const ViewOrder = ({ match }) => {
                                           <div>
                                             <strong>
                                               {
-                                                vendor.pickup_address[0]
-                                                  .address_1
+                                                vendor.pickup_address[0]?.address_1 || 'N/A'
                                               }
                                             </strong>
                                           </div>
                                         </div>
-                                        {vendor.pickup_address[0].address_2 && (
+                                        {vendor.pickup_address[0]?.address_2 && (
                                           <>
                                             <hr />
                                             <div className='d-flex justify-content-between'>
@@ -395,8 +397,7 @@ const ViewOrder = ({ match }) => {
                                               <div>
                                                 <strong>
                                                   {
-                                                    vendor.pickup_address[0]
-                                                      .address_2
+                                                    vendor.pickup_address[0]?.address_2
                                                   }
                                                 </strong>
                                               </div>
@@ -408,7 +409,7 @@ const ViewOrder = ({ match }) => {
                                           <div> City </div>
                                           <div>
                                             <strong>
-                                              {vendor.pickup_address[0].city}
+                                              {vendor.pickup_address[0]?.city || 'N/A'}
                                             </strong>
                                           </div>
                                         </div>
@@ -417,11 +418,11 @@ const ViewOrder = ({ match }) => {
                                           <div> State </div>
                                           <div>
                                             <strong>
-                                              {vendor.pickup_address[0].state}
+                                              {vendor.pickup_address[0]?.state || 'N/A'}
                                             </strong>
                                           </div>
                                         </div>
-                                        {vendor.pickup_address[0].landmark && (
+                                        {vendor.pickup_address[0]?.landmark && (
                                           <>
                                             <hr />
                                             <div className='d-flex justify-content-between'>
@@ -429,8 +430,7 @@ const ViewOrder = ({ match }) => {
                                               <div>
                                                 <strong>
                                                   {
-                                                    vendor.pickup_address[0]
-                                                      .landmark
+                                                    vendor.pickup_address[0]?.landmark
                                                   }
                                                 </strong>
                                               </div>
@@ -442,7 +442,7 @@ const ViewOrder = ({ match }) => {
                                           <div> Pin </div>
                                           <div>
                                             <strong>
-                                              {vendor.pickup_address[0].pin}
+                                              {vendor.pickup_address[0]?.pin || 'N/A'}
                                             </strong>
                                           </div>
                                         </div>

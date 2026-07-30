@@ -251,7 +251,7 @@ function Dashboard() {
                                                 <strong className='text-dark'>{v.store_name || 'Vendor Store'}</strong>
                                               </td>
                                               <td style={{ padding: '12px 15px' }}>
-                                                <span className='badge badge-secondary' style={{ fontSize: '12px', padding: '5px 10px' }}>{v.orders_count} orders</span>
+                                                <span className='text-dark' style={{ fontSize: '12px', padding: '5px 10px' }}>{v.orders_count} orders</span>
                                               </td>
                                               <td style={{ padding: '12px 15px', fontWeight: '600' }}>₹{v.total_sales?.toLocaleString('en-IN')}</td>
                                               <td style={{ padding: '12px 15px', color: '#0056b3', fontWeight: 'bold' }}>
@@ -486,7 +486,7 @@ function Dashboard() {
                               <Link
                                 to={`/orders/${item.order}/view?notification=${item._id}`}
                               >
-                                {item.notes &&  <div dangerouslySetInnerHTML={{ __html: (item.notes) }} />}
+                                {item.notes && <div dangerouslySetInnerHTML={{ __html: (item.notes) }} />}
                               </Link>
 
                               <div className='dropdown-divider' />

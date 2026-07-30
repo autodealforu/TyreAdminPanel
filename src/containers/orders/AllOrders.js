@@ -166,10 +166,20 @@ const AllOrders = ({}) => {
                                   <td> {item.status} </td>
                                   <td>
                                     <a
-                                      className='btn btn-soft-light'
+                                      className='btn btn-soft-light me-1'
                                       href={`/orders/${item._id}/view`}
+                                      title='View Order'
                                     >
                                       <i className='fa fa-eye' />
+                                    </a>
+                                    <a
+                                      className='btn btn-soft-primary me-1'
+                                      href={`${URI}/api/orders/${item._id || item.order_id}/invoice`}
+                                      target='_blank'
+                                      rel='noreferrer'
+                                      title='Download Invoice PDF'
+                                    >
+                                      <i className='fa fa-file-pdf-o' />
                                     </a>
                                     {user && user.role === 'SUPER ADMIN' && (
                                       <TableDeleteBtn

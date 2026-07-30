@@ -105,10 +105,18 @@ const ViewOrder = ({ match }) => {
               <div className='row'>
                 <div className='col-md-12 mb-3'>
                   <div className='card'>
-                    <div className='card-header'>
-                      <h4 className='card-title'>
+                    <div className='card-header d-flex justify-content-between align-items-center'>
+                      <h4 className='card-title m-0'>
                         Order #{order.order_id} - {order.status}
                       </h4>
+                      <a
+                        href={`${URI}/api/orders/${order._id || order.order_id}/invoice`}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='btn btn-primary btn-sm'
+                      >
+                        <i className='bx bx-download me-1'></i> Download Tax Invoice (PDF)
+                      </a>
                     </div>
                     <div className='card-body'>
                       <div className='row'>

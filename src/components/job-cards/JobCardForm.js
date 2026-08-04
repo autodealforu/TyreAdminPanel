@@ -292,12 +292,22 @@ function JobCardForm({
     form_type: Yup.array()
       .of(
         Yup.string().oneOf(
-          ['CLMRKC', 'CLMTELI', 'WORKC', 'WOTELI', 'SSRkc', 'SSTeli', 'Lead'],
+          [
+            'Claim',
+            'Work Order',
+            'Short Service',
+            'Lead',
+            'CLMRKC',
+            'CLMTELI',
+            'WORKC',
+            'WOTELI',
+            'SSRkc',
+            'SSTeli',
+          ],
           'Invalid form type'
         )
       )
-      .min(1, 'At least one form type must be selected')
-      .required('Form type is required'),
+      .min(1, 'At least one form type must be selected'),
 
     odometer_reading: Yup.number()
       .typeError('Odometer reading must be a number')

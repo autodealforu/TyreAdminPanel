@@ -217,7 +217,7 @@ function JobCardForm({
     // Customer and Vehicle Validation
     customer: Yup.string().required('Customer selection is required'),
     vendor: Yup.string().required('Vendor selection is required'),
-    vehicle: Yup.string().required('Vehicle selection is required'),
+    vehicle: Yup.string().nullable(),
 
     // Service Basic Information
     service_type: Yup.string()
@@ -237,7 +237,7 @@ function JobCardForm({
       1000,
       'Service notes cannot exceed 1000 characters'
     ),
-    service_technician: Yup.string().required('Service technician is required'),
+    service_technician: Yup.string().nullable(),
 
     // Financial Validation
     service_labor_cost: Yup.number()
@@ -579,17 +579,36 @@ function JobCardForm({
 
           // Set selected customer if it exists
           if (data.customer) {
-            setSelectedCustomer(data.customer);
+            setSelectedCustomer(
+              typeof data.customer === 'object'
+                ? data.customer
+                : { name: 'Customer', _id: data.customer }
+            );
+          } else {
+            setSelectedCustomer({ name: 'Customer (General)', _id: 'general' });
           }
 
-          // Set selected vehicle if it exists
+          // Set selected vehicle if it exists or fallback
           if (data.vehicle) {
-            setSelectedVehicle(data.vehicle);
+            setSelectedVehicle(
+              typeof data.vehicle === 'object'
+                ? data.vehicle
+                : { makeModel: 'Vehicle Not Specified', _id: data.vehicle }
+            );
+          } else {
+            setSelectedVehicle({
+              makeModel: 'Vehicle Not Specified',
+              vehicle_number: 'N/A',
+            });
           }
 
           // Set selected vendor if it exists
           if (data.vendor) {
-            setSelectedVendor(data.vendor);
+            setSelectedVendor(
+              typeof data.vendor === 'object'
+                ? data.vendor
+                : { store_name: 'Vendor', _id: data.vendor }
+            );
           }
         }
       } else {
@@ -1235,7 +1254,7 @@ function JobCardForm({
                           </ul>
                         </div>
                       )}
-                    {selectedCustomer && selectedVehicle && (
+                    {(selectedCustomer || selectedVehicle || values.customer || edit) && (
                       <>
                         {/* Selected Customer and Vehicle Details Display */}
                         <div className='row mb-4'>

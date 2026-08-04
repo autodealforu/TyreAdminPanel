@@ -96,12 +96,13 @@ export const useGetDropdownOptions = () => {
   useEffect(() => {
     if (makemodel && makemodel.all_makemodels) {
       const newData = makemodel.all_makemodels.map((item) => {
-        return { label: item.name, value: item._id };
+        return { label: item.name || `${item.make || ''} ${item.model || ''}`, value: item._id };
       });
 
       setDropdownOptions((prevOptions) => ({
         ...prevOptions,
         makeModel: newData,
+        makemodel: newData,
       }));
     }
   }, [makemodel]);
@@ -111,16 +112,20 @@ export const useGetDropdownOptions = () => {
       const newData = customer.all_customers.map((item) => {
         return { label: item.name, value: item._id };
       });
-      setDropdownOptions({ ...dropdownOptions, owner: newData });
+      setDropdownOptions((prevOptions) => ({
+        ...prevOptions,
+        owner: newData,
+      }));
     }
   }, [customer]);
 
   const loadOptions = async (inputValue, callback, field) => {
-    if (field === 'makemodel') {
+    if (field === 'makemodel' || field === 'makeModel') {
       await setMakeModelSearchField('name');
       await setMakeModelSearchValue(inputValue);
-      if (dropdownOptions.makemodel) {
-        callback(dropdownOptions.makemodel);
+      const list = dropdownOptions.makeModel || dropdownOptions.makemodel;
+      if (list) {
+        callback(list);
       }
     }
   };
